@@ -1,32 +1,32 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useImmer} from "use-immer";
-import {getDomains, saveDomain} from "../../../services/client.js";
+import {getDashboard} from "../../../services/client.js";
 import MainLayout from "../../layouts/MainLayout.jsx";
 
 const Dashboard = () => {
 
-    const [domains, setDomains] = useState([]);
-    const [loadingDomain, setLoadingDomain] = useState(false);
+    const [data, setData] = useImmer([]);
+    const [loading, setLoading] = useImmer(false);
 
     useEffect( () => {
         $('body').attr('class','sidebar-mini text-sm')
 
-        getAllDomains()
+        getDashboardData()
     }, [])
 
-    const getAllDomains = () => {
-        setLoadingDomain(true)
-        getDomains().then( res => {
-            setDomains(res.data)
+    const getDashboardData = () => {
+        setLoading(true)
+        getDashboard().then( res => {
+            setData(res.data)
         }).catch(err => {
             console.log(err)
         }).finally( () => {
-            setLoadingDomain(false)
+            setLoading(false)
         })
     }
 
     const Loader = () => {
-        if (loadingDomain) {
+        if (loading) {
             return <div className="overlay dark">
                 <i className="fas fa-2x fa-spinner fa-spin"></i>
             </div>

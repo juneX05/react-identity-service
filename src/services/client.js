@@ -21,14 +21,28 @@ const dispatchRequest = async (url, method = "GET", data = null, config = {}) =>
     return response.data
 }
 
-const sendPostRequest = async (url, data = null, auth = true) => {
-    if (auth) return dispatchRequest(url, "POST", data, getAuthConfig)
+const sendPostRequest = async (url, data = null, auth = true, config = getAuthConfig) => {
+    if (auth) return dispatchRequest(url, "POST", data, config)
     return dispatchRequest(url, "POST", data)
+}
+
+const sendFormDataRequest = async (url, data = null, auth = true) => {
+    const formData = new FormData();
+    if (data) {
+        for (const key in data) {
+            formData.append(key, data[key])
+        }
+    }
+    return sendPostRequest(url, formData, auth, {...getAuthConfig, 'content-type' : 'multipart/form-data'})
 }
 
 const sendGetRequest = async (url, auth = true) => {
     if (auth) return dispatchRequest(url, "GET", null, getAuthConfig)
     return dispatchRequest(url, "GET")
+}
+
+export const getDashboard = async (params) => {
+    return await sendGetRequest('/api/v1/dashboard/data?' + params)
 }
 
 export const getDomains = async (params) => {
@@ -44,7 +58,7 @@ export const logoutUser = async () => {
 }
 
 export const saveDomain = async (domain) => {
-    return await sendPostRequest('/api/v1/domains/register', domain)
+    return await sendFormDataRequest('/api/v1/domains/register', domain)
 }
 
 export const login = async (data) => {

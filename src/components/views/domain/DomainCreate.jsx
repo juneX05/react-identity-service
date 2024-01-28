@@ -13,6 +13,8 @@ const DomainCreate = () => {
         administratorEmail: '',
         administratorFirstName: '',
         administratorLastName: '',
+        logo: {},
+        commissionPercentage: '',
     }
     const notificationInitialValue = {
         status: null,
@@ -29,11 +31,18 @@ const DomainCreate = () => {
             || domain.administratorEmail == ''
             || domain.administratorFirstName == ''
             || domain.administratorLastName == ''
+            || domain.commissionPercentage == ''
+            || domain.logo == ''
     }
 
     const handleDomainUpdate = (e) => {
         const field = e.target.id;
-        const value = e.target.value
+        let value;
+        if (field === "logo") {
+            value = e.target.files[0]
+        } else {
+            value = e.target.value
+        }
 
         updateDomain(draft => {
             draft[field] = value
@@ -63,7 +72,7 @@ const DomainCreate = () => {
                         $('#create_domain_close_btn').trigger('click')
 
                         setLoadingSaveDomain(false)
-                        navigate("/domain/list")
+                        navigate("/domains/list")
                     },3000)
                 } else {
                     for (const key in r.data) {
@@ -132,7 +141,13 @@ const DomainCreate = () => {
                                type="text" className="form-control form-control-sm" id="url" placeholder="URL"/>
                         <div className="text-danger">{domainErrors.url}</div>
                     </div>
-                    <div className="form-group col-md-12">
+                    <div className="form-group col-md-6">
+                        <label htmlFor="name" className="col-form-label">Commission Percentage</label>
+                        <input onChange={handleDomainUpdate}
+                               type="text" className="form-control form-control-sm" id="commissionPercentage" placeholder="Commission Percentage"/>
+                        <div className="text-danger">{domainErrors.commissionPercentage}</div>
+                    </div>
+                    <div className="form-group col-md-6">
                         <label htmlFor="name" className="col-form-label">Administrator Email</label>
                         <input onChange={handleDomainUpdate}
                                type="text" className="form-control form-control-sm" id="administratorEmail" placeholder="Administrator Email"/>
@@ -149,6 +164,16 @@ const DomainCreate = () => {
                         <input onChange={handleDomainUpdate}
                                type="text" className="form-control form-control-sm" id="administratorLastName" placeholder="Administrator Last Name"/>
                         <div className="text-danger">{domainErrors.administratorLastName}</div>
+                    </div>
+                    <div className="form-group col-md-12">
+                        <label htmlFor="logo">Logo</label>
+                        <div className="custom-file">
+                            <input onChange={handleDomainUpdate}
+                                   type="file" className="custom-file-input" id="logo" />
+                            <label className="custom-file-label" htmlFor="logo">
+                                {domain.logo ? domain.logo.name : 'Choose File'}
+                            </label>
+                        </div>
                     </div>
                     {/*<div className="form-group row">*/}
                     {/*    <div className="offset-sm-4 col-sm-8">*/}
