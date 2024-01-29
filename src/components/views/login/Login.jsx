@@ -154,7 +154,7 @@ const Login = () => {
                             {/*</div>*/}
                             {/* /.col */}
                             <div className="col-12">
-                                <button onClick={Submit} disabled={ValidateRecord() || loading} type="submit" className="btn btn-primary btn-block">Sign In</button>
+                                <button onClick={Submit} disabled={ValidateRecord() || loading} type="button" className="btn btn-primary btn-block">Sign In</button>
                             </div>
                             {/* /.col */}
                         </div>
