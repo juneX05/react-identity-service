@@ -3,6 +3,11 @@ import {useAuth} from "../../context/AuthContext.jsx";
 
 const menus = [
     {
+        type: 'header',
+        name: 'menu',
+        title: 'MENU',
+    },
+    {
         name: 'home',
         title: 'Home',
         icon: 'fas fa-tachometer-alt',
@@ -29,15 +34,30 @@ const menus = [
         ],
     },
     {
-        name: 'simple_link',
-        title: 'Simple Link',
-        icon: 'fas fa-tachometer-alt',
-        path: '/simple',
-        badge: {
-            title: 'New',
-            color: 'success'
-        }
-    }
+        type: 'header',
+        name: 'configuration',
+        title: 'CONFIGURATION',
+    },
+    {
+        name: 'users',
+        title: 'Users',
+        icon: 'fas fa-users',
+        path: '#',
+        children: [
+            {
+                name: 'view_users',
+                title: 'View Users',
+                icon: 'fas fa-users',
+                path: '/users/list',
+            },
+            {
+                name: 'create_user',
+                title: 'Create User',
+                icon: 'fas fa-users',
+                path: '/users/create',
+            }
+        ],
+    },
 ]
 
 
@@ -58,7 +78,7 @@ const Sidebar = () => {
     return (
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
             <a href="/" className="brand-link">
-                <img src={"/src/assets/dist/img/AdminLTELogo.png"} alt="AdminLTE Logo"
+                <img src={"/images/AdminLTELogo.png"} alt="AdminLTE Logo"
                      className="brand-image img-circle elevation-3"
                      style={{opacity: .8}}/>
                 <span className="brand-text font-weight-light">AdminLTE 3</span>
@@ -67,7 +87,7 @@ const Sidebar = () => {
             <div className="sidebar">
                 <div className="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="image">
-                        <img src={"/src/assets/dist/img/avatar.png"} className="img-circle elevation-2"
+                        <img src={"/images/avatar.png"} className="img-circle elevation-2"
                              alt="User Image"/>
                     </div>
                     <div className="info">
@@ -89,10 +109,15 @@ const Sidebar = () => {
 
                 <nav className="mt-2">
                     <ul className="nav nav-pills nav-sidebar flex-column nav-compact nav-child-indent" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                        data-accordion="true">
                         {
                             menus.map((menu, index) => {
-                                if (menu.children) {
+                                if (menu.type === 'header') {
+                                    return (
+                                        <li className="nav-header" key={index}>{menu.title}</li>
+                                    )
+                                }
+                                else if (menu.children) {
                                     return (
                                         <li className={`nav-item ${isActive(menu.path, menu.children) ? 'menu-open' : ''}`} key={index}>
                                             <a href={'#'}

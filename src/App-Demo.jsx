@@ -1,4 +1,4 @@
-import UserProfile from "./components/views/user/UserProfile.jsx";
+import UserProfile from "./components/views/core/auth/UserProfile.jsx";
 import {useState, useEffect} from "react";
 
 const users = [

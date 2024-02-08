@@ -1,3 +1,26 @@
-@import './assets/plugins/fontawesome-free/css/all.min.css';
-@import './assets/plugins/select2/css/select2.min.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'select2/dist/css/select2.css';
+@import "tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.css";
+
 @import './assets/dist/css/adminlte.min.css';
+
+.direct-chat-messages {
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    min-height: 100%;
+    overflow-h: auto;
+    padding: 10px;
+}
+
+.direct-chat-contacts {
+    -webkit-transform: translate(101%,0);
+    transform: translate(101%,0);
+    background-color: #343a40;
+    bottom: 0;
+    color: #fff;
+    min-height: 100%;
+    overflow-h: auto;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}

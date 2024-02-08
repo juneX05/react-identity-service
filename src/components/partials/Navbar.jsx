@@ -1,4 +1,5 @@
 import {useAuth} from "../../context/AuthContext.jsx";
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
     const {logout, user} = useAuth()
@@ -36,9 +37,9 @@ const Navbar = () => {
                         {/*    <span className="float-right text-muted text-sm">3 mins</span>*/}
                         {/*</a>*/}
                         {/*<div className="dropdown-divider"></div>*/}
-                        <a href="#" className="dropdown-item">
+                        <Link to={"/profile"} href="#" className="dropdown-item">
                             <i className="fas fa-users mr-2"></i> Profile
-                        </a>
+                        </Link>
                         <div className="dropdown-divider"></div>
                         <a href="#" className="dropdown-item">
                             <i className="fas fa-cogs mr-2"></i> Settings

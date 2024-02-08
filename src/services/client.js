@@ -1,4 +1,4 @@
-import axios from "axios";
+
 
 const getAuthConfig = {
     headers: {
@@ -10,12 +10,13 @@ const dispatchRequest = async (url, method = "GET", data = null, config = {}) =>
     let response;
     try {
         if (method === "GET") {
-            response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}${url}`, config)
+            response = await axios.get(`${url}`, config)
         } else {
-            response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}${url}`, data, config)
+            response = await axios.post(`${url}`, data, config)
         }
     } catch (e) {
-        response = e.response
+        if (e.code === "ERR_NETWORK") response = {data: {status: false, message:'Network Error', data: null}}
+        else response = e.response
     }
 
     return response.data
@@ -53,6 +54,14 @@ export const getUserDetails = async () => {
     return await sendGetRequest('/api/v1/auth/user')
 }
 
+export const changePassword = async (data) => {
+    return await sendPostRequest('/api/v1/auth/change-password', data)
+}
+
+export const updateDetails = async (data) => {
+    return await sendPostRequest('/api/v1/auth/update-details', data)
+}
+
 export const logoutUser = async () => {
     return await sendGetRequest('/api/v1/auth/logout')
 }
@@ -63,4 +72,8 @@ export const saveDomain = async (domain) => {
 
 export const login = async (data) => {
     return await sendPostRequest('/api/v1/auth/login', data, false)
+}
+
+export const getUsers = async (params) => {
+    return await sendGetRequest('/api/v1/users/list?' + params)
 }

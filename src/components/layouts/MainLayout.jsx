@@ -7,8 +7,8 @@ import {useEffect} from "react";
 
 const MainLayout = ({pageHeader, ...props}) => {
     useEffect( () => {
-        $('body').attr('class','layout-fixed sidebar-mini text-sm')
-        $('body').Layout('fixLayoutHeight')
+        // $('body').attr('class','layout-fixed sidebar-mini text-sm')
+        // $('body').Layout('fixLayoutHeight')
     }, [])
     return (
         <div className="wrapper">
